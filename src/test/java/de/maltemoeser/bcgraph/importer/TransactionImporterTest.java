@@ -1,5 +1,6 @@
 package de.maltemoeser.bcgraph.importer;
 
+import de.maltemoeser.bcgraph.entities.BCAddress;
 import de.maltemoeser.bcgraph.entities.BCOutput;
 import de.maltemoeser.bcgraph.entities.BCTransaction;
 import de.maltemoeser.bcgraph.testing.Neo4jTest;
@@ -8,6 +9,9 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -27,11 +31,12 @@ public class TransactionImporterTest extends Neo4jTest {
         TransactionOutput transactionOutput = TestUtils.getStandardTransactionOutput();
 
         try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
-
             BCOutput output = transactionImporter.createOutputNode(transactionOutput);
 
             assertEquals(16077121L, output.getValue());
             assertEquals(0, output.getIndex());
+            transactionImporter.parseOutputScript(output, transactionOutput.getScriptPubKey());
+            assertTrue("1Q5Ae5FXzTjAthWKutqP3bQYYthEFv9Xmt".equals(output.getSingleAddress().getHash()));
         }
     }
 
@@ -46,8 +51,8 @@ public class TransactionImporterTest extends Neo4jTest {
             assertEquals(1, output.getIndex());
 
             transactionImporter.parseOutputScript(output, transactionOutput.getScriptPubKey());
-
             assertTrue(output.isPayToScriptHash());
+            assertTrue("39NYcE1djHQv9KW9qqf4VFH2MsEQRdQADB".equals(output.getSingleAddress().getHash()));
         }
     }
 
@@ -63,10 +68,15 @@ public class TransactionImporterTest extends Neo4jTest {
             assertEquals(0, output.getIndex());
 
             transactionImporter.parseOutputScript(output, transactionOutput.getScriptPubKey());
-
             assertEquals(1, output.getNumberOfRequiredSignatures());
             assertEquals(3, output.getNumberOfTotalSignatures());
             assertTrue(output.isSentToMultiSig());
+
+            assertEquals(3, output.getNumberOfAddresses());
+            Set<String> addresses = output.getAddresses().stream().map(BCAddress::getHash).collect(Collectors.toSet());
+            assertTrue(addresses.contains("1PCu5JyieveBFZpE9FT6VWGaZPTfEsDzWe"));
+            assertTrue(addresses.contains("1Lc5yK4PUrRcT26xVJ3PJDuhjCcq7zrNSK"));
+            assertTrue(addresses.contains("13v86MqrxZ3LgwPN1yE9fxF2cj2pbvK2NA"));
         }
     }
 

@@ -1,9 +1,6 @@
 package de.maltemoeser.bcgraph.importer;
 
-import de.maltemoeser.bcgraph.entities.BCBlock;
-import de.maltemoeser.bcgraph.entities.BCBlockService;
-import de.maltemoeser.bcgraph.entities.BCTransaction;
-import de.maltemoeser.bcgraph.entities.BCTransactionService;
+import de.maltemoeser.bcgraph.entities.*;
 import de.maltemoeser.bcgraph.testing.Neo4jTest;
 import org.bitcoinj.core.Coin;
 import org.junit.Test;
@@ -42,6 +39,11 @@ public class BlockChainImporterTest extends Neo4jTest {
             assertTrue(threeHundredCoinbase.isCoinbase());
             assertEquals(300, threeHundredCoinbase.getBlock().getHeight());
             assertEquals(Coin.valueOf(50, 0).getValue(), threeHundredCoinbase.getValue());
+
+            BCOutput output = threeHundredCoinbase.getOutputByIndex(0);
+            assertEquals(Coin.valueOf(50, 0).getValue(), output.getValue());
+            assertEquals(1, output.getNumberOfAddresses());
+            assertTrue("1Pi8agZKamjLJxfeGRUpGWGQimb8N21Hig".equals(output.getSingleAddress().getHash()));
 
             assertNotNull(testDatabase.getLastInsertedBlockHeight());
             assertEquals(489, (int) testDatabase.getLastInsertedBlockHeight());

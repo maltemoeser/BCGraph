@@ -1,26 +1,27 @@
 package de.maltemoeser.bcgraph.importer;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import de.maltemoeser.bcgraph.constants.OutputType;
 import de.maltemoeser.bcgraph.database.Database;
-import de.maltemoeser.bcgraph.entities.BCOutput;
-import de.maltemoeser.bcgraph.entities.BCOutputService;
-import de.maltemoeser.bcgraph.entities.BCTransaction;
-import de.maltemoeser.bcgraph.entities.BCTransactionService;
+import de.maltemoeser.bcgraph.entities.*;
 import de.maltemoeser.bcgraph.utils.ScriptUtils;
 import org.bitcoinj.core.*;
 import org.bitcoinj.script.Script;
+import org.neo4j.cypher.internal.compiler.v1_9.commands.expressions.Add;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class TransactionImporter {
 
     GraphDatabaseService graphDatabaseService;
 
     private BCTransactionService transactionService;
+    private BCAddressService addressService;
     private BCOutputService outputService;
 
     private Transaction bitcoinTransaction;
@@ -31,14 +32,22 @@ public class TransactionImporter {
     private Collection<BCOutput> bcInputs = new ArrayList<>();
     private Collection<BCOutput> bcOutputs = new ArrayList<>();
 
+    private final Provider<AddressImporter> addressImporterProvider;
+
     @Inject
-    public TransactionImporter(Database database) {
+    public TransactionImporter(Database database, Provider<AddressImporter> addressImporterProvider) {
         this.graphDatabaseService = database.getGraphDatabaseService();
+        this.addressImporterProvider = addressImporterProvider;
     }
 
     @Inject
     public void setTransactionService(BCTransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    @Inject
+    public void setAddressService(BCAddressService addressService) {
+        this.addressService = addressService;
     }
 
     @Inject
@@ -147,8 +156,13 @@ public class TransactionImporter {
     protected void parseOutputScript(BCOutput bcOutput, Script script) {
         OutputType outputType = ScriptParser.getOutputTypeFromScript(script);
         ScriptParser.setOutputType(bcOutput, outputType, script);
-    }
 
+        AddressImporter addressImporter = addressImporterProvider.get();
+        List<BCAddress> addresses = addressImporter.parseAddress(script, outputType);
+        for(BCAddress address : addresses) {
+            bcOutput.connectToAddress(address);
+        }
+    }
 
     public void calculateFeeAndValue() {
         calculateFeeAndValue(bcInputs, bcOutputs);
