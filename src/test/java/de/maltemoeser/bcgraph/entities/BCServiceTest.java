@@ -68,6 +68,19 @@ public class BCServiceTest extends Neo4jTest {
             final String TXHASH = "myTransaction";
             BCTransaction transaction = transactionService.createTransaction(TXHASH);
             assertEquals(transaction, transactionService.getTransactionByHash(TXHASH));
+
+            final String BLOCKHASH1 = "myBlock1";
+            final String BLOCKHASH2 = "myBlock2";
+
+            BCTransaction transaction2 = transactionService.createTransaction(TXHASH);
+            BCBlock block1 = blockService.createBlock(BLOCKHASH1);
+            BCBlock block2 = blockService.createBlock(BLOCKHASH2);
+
+            block1.addTransaction(transaction);
+            block2.addTransaction(transaction2);
+
+            assertEquals(transaction2, transactionService.getTransactionByHashAndBlockHash(TXHASH, BLOCKHASH2));
+            assertEquals(transaction, transactionService.getTransactionByHashAndBlockHash(TXHASH, BLOCKHASH1));
         }
     }
 
