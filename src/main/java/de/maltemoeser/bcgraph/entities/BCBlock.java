@@ -5,6 +5,12 @@ import de.maltemoeser.bcgraph.constants.NodeProperty;
 import de.maltemoeser.bcgraph.constants.RelType;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+
+import javax.management.relation.Relation;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class BCBlock extends BCEntity {
 
@@ -51,6 +57,15 @@ public class BCBlock extends BCEntity {
      */
     public void addTransaction(BCTransaction transaction) {
         transaction.getUnderlyingNode().createRelationshipTo(underlyingNode, RelType.IN_BLOCK);
+    }
+
+    public Collection<BCTransaction> getTransactions() {
+        Collection<BCTransaction> transactions = new ArrayList<>();
+        Iterable<Relationship> relationships = underlyingNode.getRelationships(RelType.IN_BLOCK, Direction.INCOMING);
+        for(Relationship relationship : relationships) {
+            transactions.add(new BCTransaction(relationship.getOtherNode(underlyingNode)));
+        }
+        return transactions;
     }
 
     /**

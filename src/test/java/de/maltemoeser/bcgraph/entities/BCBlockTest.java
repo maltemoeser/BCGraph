@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 
+import java.util.Collection;
+
 import static org.junit.Assert.*;
 
 public class BCBlockTest extends Neo4jTest {
@@ -80,6 +82,11 @@ public class BCBlockTest extends Neo4jTest {
             BCTransaction transaction2 = new BCTransaction(graphDatabaseService.createNode(LabelType.Transaction));
             block.addTransaction(transaction2);
             assertEquals(2, block.getNumberOfTransactions());
+
+            Collection<BCTransaction> transactions = block.getTransactions();
+            assertEquals(2, transactions.size());
+            assertTrue(transactions.contains(transaction1));
+            assertTrue(transactions.contains(transaction2));
         }
     }
 
