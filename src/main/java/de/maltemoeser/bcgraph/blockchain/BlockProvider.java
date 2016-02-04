@@ -26,7 +26,7 @@ public class BlockProvider {
     }
 
     public void initialize() {
-        blockLoader.initialize(simplifiedBlockChain, this.startHeight);
+        blockLoader.initialize(simplifiedBlockChain, startHeight);
     }
 
     public int getHeightForHash(String hash) {

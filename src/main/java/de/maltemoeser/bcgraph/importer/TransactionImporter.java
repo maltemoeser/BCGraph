@@ -8,7 +8,6 @@ import de.maltemoeser.bcgraph.entities.*;
 import de.maltemoeser.bcgraph.utils.ScriptUtils;
 import org.bitcoinj.core.*;
 import org.bitcoinj.script.Script;
-import org.neo4j.cypher.internal.compiler.v1_9.commands.expressions.Add;
 import org.neo4j.graphdb.GraphDatabaseService;
 
 import java.util.ArrayList;
@@ -150,7 +149,7 @@ public class TransactionImporter {
      */
     private void updateP2SHInput(TransactionInput input, BCOutput bcOutput) {
         Script scriptPubKey = ScriptUtils.getScriptFromP2SHInput(input);
-        parseOutputScript(bcOutput, scriptPubKey);
+        parseOutputScriptFromP2SHInput(bcOutput, scriptPubKey);
     }
 
     protected void parseOutputScript(BCOutput bcOutput, Script script) {
@@ -159,9 +158,12 @@ public class TransactionImporter {
 
         AddressImporter addressImporter = addressImporterProvider.get();
         List<BCAddress> addresses = addressImporter.parseAddress(script, outputType);
-        for(BCAddress address : addresses) {
-            bcOutput.connectToAddress(address);
-        }
+        addresses.forEach(bcOutput::connectToAddress);
+    }
+
+    protected void parseOutputScriptFromP2SHInput(BCOutput bcOutput, Script script) {
+        OutputType outputType = ScriptParser.getOutputTypeFromScript(script);
+        ScriptParser.setOutputType(bcOutput, outputType, script);
     }
 
     public void calculateFeeAndValue() {
