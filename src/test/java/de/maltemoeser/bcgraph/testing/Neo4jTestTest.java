@@ -35,7 +35,7 @@ public class Neo4jTestTest extends Neo4jTest {
 
             output = getNewOutput(0, 9999999999L);
             assertEquals(0, output.getIndex());
-            assertEquals(999999999L, output.getValue());
+            assertEquals(9999999999L, output.getValue());
 
             output = getNewOutput(1, 8888888888L, "address");
             assertEquals(1, output.getIndex());
