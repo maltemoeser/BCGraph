@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/maltemoeser/BCGraph.svg?branch=master)](https://travis-ci.org/maltemoeser/BCGraph)
+[![Coverage Status](https://coveralls.io/repos/github/maltemoeser/BCGraph/badge.svg?branch=master)](https://coveralls.io/github/maltemoeser/BCGraph?branch=master)
 
 # BCGraph
 BCGraph allows to import the Bitcoin blockchain into a Neo4j graph database.
