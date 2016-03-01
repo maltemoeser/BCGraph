@@ -22,8 +22,8 @@ public class TestUtils {
     public static final String TEST_BLOCK_HASH = "00000000000000000ec32843883a983fe86f8823b87480520e88261784eea941";
     public static final int TEST_BLOCK_NO_TX = 2149;
 
-    protected static final String COINBASE_HASH = "2556a4729a22b9db53ef78ccf74d51599c0c17565dd11445df3a4b474e3b9d15";
-    protected static final String SECOND_TRANSACTION_HASH = "e01c017bcf2fb6703e9b74a2e99ae2da0598d438c27e7ee6733b2bab37bc4993";
+    public static final String COINBASE_HASH = "2556a4729a22b9db53ef78ccf74d51599c0c17565dd11445df3a4b474e3b9d15";
+    public static final String SECOND_TRANSACTION_HASH = "e01c017bcf2fb6703e9b74a2e99ae2da0598d438c27e7ee6733b2bab37bc4993";
 
     /** Test data from serialized block **/
 
@@ -103,41 +103,5 @@ public class TestUtils {
             e.printStackTrace();
         }
         return new Transaction(MainNetParams.get(), txBytes);
-    }
-
-
-    @Before
-    public void setUp() {
-        Context context = new Context(MainNetParams.get());
-    }
-
-    /**
-     * Ensure that we correctly load the test block.
-     */
-    @Test
-    public void testGetTestBlock() {
-        Block block = getTestBlock();
-
-        assert (block != null);
-
-        assertThat(block, instanceOf(Block.class));
-
-        assertEquals(block.getHashAsString(), TEST_BLOCK_HASH);
-        assertEquals(block.getTransactions().size(), TEST_BLOCK_NO_TX);
-
-        Transaction coinbase = block.getTransactions().get(0);
-        assertTrue(coinbase.isCoinBase());
-        assertEquals(coinbase.getHashAsString(), COINBASE_HASH);
-
-        Transaction secondTransaction = block.getTransactions().get(1);
-        assertFalse(secondTransaction.isCoinBase());
-        assertEquals(secondTransaction.getHashAsString(), SECOND_TRANSACTION_HASH);
-    }
-
-    @Test
-    public void testGetStealthTransaction() {
-        Transaction transaction = getStealthTransaction();
-        assertThat(transaction, instanceOf(Transaction.class));
-        assertEquals(STEALTH_TRANSACTION, transaction.getHashAsString());
     }
 }
