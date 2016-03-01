@@ -1,4 +1,4 @@
-package de.maltemoeser.bcgraph.utils;
+package de.maltemoeser.bcgraph.testing;
 
 import de.maltemoeser.bcgraph.testing.BitcoinTest;
 import de.maltemoeser.bcgraph.testing.TestUtils;
