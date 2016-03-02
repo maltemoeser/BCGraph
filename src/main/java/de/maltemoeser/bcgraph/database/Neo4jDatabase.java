@@ -38,7 +38,7 @@ public abstract class Neo4jDatabase {
             Schema schema = graphDatabase.schema();
 
             if (!schema.getIndexes().iterator().hasNext()) {
-                LOGGER.info("Creating Indexes and Unique Constraints.");
+                LOGGER.debug("Creating Indexes and Unique Constraints.");
 
                 schema.constraintFor(LabelType.Block)
                         .assertPropertyIsUnique("hash")
