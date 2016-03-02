@@ -8,7 +8,7 @@ import org.neo4j.graphdb.traversal.Evaluator;
 /**
  * An evaluator rule that stops once the path's end node exceeds a certain block height.
  */
-public class MaximumHeightEvaluator implements Evaluator {
+public class MaximumHeightEvaluator extends TransactionEvaluator implements Evaluator {
 
     protected int height;
 
@@ -17,13 +17,7 @@ public class MaximumHeightEvaluator implements Evaluator {
     }
 
     @Override
-    public Evaluation evaluate(Path path) {
-        BCTransaction transaction = new BCTransaction(path.endNode());
-
-        if (!transaction.isTransaction()) {
-            throw new UnsupportedOperationException("MaximumHeightEvaluator can only be used on transaction nodes.");
-        }
-
+    public Evaluation doEvaluate(Path path) {
         if (transaction.getHeight() > height) {
             return Evaluation.EXCLUDE_AND_PRUNE;
         } else {
