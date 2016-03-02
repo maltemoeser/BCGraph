@@ -1,6 +1,5 @@
 package de.maltemoeser.bcgraph.traversal.evaluator;
 
-import de.maltemoeser.bcgraph.entities.BCTransaction;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.traversal.Evaluation;
 import org.neo4j.graphdb.traversal.Evaluator;

@@ -13,7 +13,7 @@ public abstract class TransactionEvaluator {
         transaction = new BCTransaction(path.endNode());
 
         if (!transaction.isTransaction()) {
-            throw new UnsupportedOperationException("A TransactionEvaluator can only be used with transaction nodes.");
+            throw new IllegalArgumentException("A TransactionEvaluator can only be used with transaction nodes.");
         }
 
         return doEvaluate(path);

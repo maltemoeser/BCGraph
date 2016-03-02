@@ -1,6 +1,7 @@
 package de.maltemoeser.bcgraph.traversal.evaluator;
 
 import de.maltemoeser.bcgraph.constants.RelType;
+import de.maltemoeser.bcgraph.entities.BCBlock;
 import de.maltemoeser.bcgraph.entities.BCTransaction;
 import de.maltemoeser.bcgraph.testing.BlockTransactionPair;
 import de.maltemoeser.bcgraph.testing.Neo4jTest;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class TransactionEvaluatorTest extends Neo4jTest {
 
     TestGraphUtils testGraphUtils;
+    BCBlock secondBlock;
     BCTransaction firstTransaction;
     BCTransaction lastTransaction;
     BCTransaction thirdTransaction;
@@ -43,11 +45,28 @@ public class TransactionEvaluatorTest extends Neo4jTest {
             block3.getTransaction().connectToPreviousTransaction(block2.getTransaction());
             block4.getTransaction().connectToPreviousTransaction(block3.getTransaction());
 
+            secondBlock = block2.getBlock();
             firstTransaction = block0.getTransaction();
             lastTransaction = block4.getTransaction();
             thirdTransaction = block2.getTransaction();
 
             tx.success();
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testIncorrectNodeType() {
+        try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
+            Evaluator minimumHeightEvaluator = new MinimumHeightEvaluator(1);
+
+            Traverser paths = graphDatabaseService.traversalDescription()
+                    .relationships(RelType.PREV_BLOCK, Direction.BOTH)
+                    .evaluator(minimumHeightEvaluator)
+                    .traverse(secondBlock.getUnderlyingNode());
+
+            for(Node node : paths.nodes()) {
+                System.out.println(node);
+            }
         }
     }
 
