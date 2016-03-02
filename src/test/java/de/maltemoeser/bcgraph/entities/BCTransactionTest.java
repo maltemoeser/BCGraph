@@ -10,6 +10,7 @@ import org.neo4j.graphdb.Node;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
@@ -86,15 +87,33 @@ public class BCTransactionTest extends Neo4jTest {
 
             assertEquals(2, transaction.getInputs().size());
             assertEquals(3, transaction.getOutputs().size());
-
-            try {
-                transaction.getOutputByIndex(4);
-                assert(false);
-            } catch (IndexOutOfBoundsException e) {
-                // all good, ignore
-            }
         }
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testInvalidOutputIndex() {
+        try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
+            BCTransaction transaction = getNewTransaction();
+            transaction.addOutput(getNewOutput(0));
+            transaction.addOutput(getNewOutput(1));
+
+            // should fail
+            transaction.getOutputByIndex(2);
+        }
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testMissingOutputIndex() {
+        try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
+            BCTransaction transaction = getNewTransaction();
+            transaction.addOutput(getNewOutput(0));
+            transaction.addOutput(getNewOutput(2));
+
+            // should fail
+            transaction.getOutputByIndex(1);
+        }
+    }
+
 
     @Test
     public void testIsCoinbase() {
