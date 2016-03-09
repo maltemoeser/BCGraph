@@ -7,7 +7,7 @@ import org.neo4j.graphdb.traversal.Evaluation;
 
 public abstract class TransactionEvaluator {
 
-    BCTransaction transaction;
+    protected BCTransaction transaction;
 
     public Evaluation evaluate(Path path) {
         transaction = new BCTransaction(path.endNode());
