@@ -2,19 +2,13 @@ package de.maltemoeser.bcgraph.testing;
 
 import org.apache.commons.io.FileUtils;
 import org.bitcoinj.core.Block;
-import org.bitcoinj.core.Context;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.params.MainNetParams;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.*;
 
 public class TestUtils {
 

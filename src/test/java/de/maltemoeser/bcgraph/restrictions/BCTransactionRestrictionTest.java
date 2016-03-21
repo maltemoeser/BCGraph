@@ -8,7 +8,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-public class TransactionRestrictionTest extends Neo4jTest {
+public class BCTransactionRestrictionTest extends Neo4jTest {
 
     @Test
     public void testMinInputCountRestriction() {
