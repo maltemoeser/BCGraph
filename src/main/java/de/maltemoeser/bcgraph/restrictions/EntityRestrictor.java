@@ -3,6 +3,10 @@ package de.maltemoeser.bcgraph.restrictions;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Takes multiple restrictions and evaluates whether they all apply.
+ * @param <T> specifies the type of the underlying entity, e.g., BCTransaction or Transaction
+ */
 public class EntityRestrictor<T> implements Restrictor<T> {
 
     protected Collection<Restriction<T>> restrictions = new ArrayList<>();

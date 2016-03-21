@@ -28,10 +28,13 @@ public class StealthAddressTransactionRestriction implements Restriction<Transac
             return false;
         }
 
+        // Stealth address paylout is 38 bytes
+        // see https://wiki.unsystem.net/en/index.php/DarkWallet/Stealth#Transaction_format for details
         if(data.length != 38) {
             return false;
         }
 
+        // byte 0: version, must be 6
         if(data[0] == 6) {
             ECKey key = ECKey.fromPublicOnly(Arrays.copyOfRange(data, 5, data.length));
             return true;
