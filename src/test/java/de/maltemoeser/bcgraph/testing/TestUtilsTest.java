@@ -1,7 +1,5 @@
 package de.maltemoeser.bcgraph.testing;
 
-import de.maltemoeser.bcgraph.testing.BitcoinTest;
-import de.maltemoeser.bcgraph.testing.TestUtils;
 import org.bitcoinj.core.Block;
 import org.bitcoinj.core.Transaction;
 import org.junit.Test;
