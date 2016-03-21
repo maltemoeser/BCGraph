@@ -40,4 +40,11 @@ public class TestUtilsTest extends BitcoinTest {
         assertThat(transaction, instanceOf(Transaction.class));
         assertEquals(TestUtils.STEALTH_TRANSACTION, transaction.getHashAsString());
     }
+
+    @Test
+    public void testGetPaymentCodeTransaction() {
+        Transaction transaction = TestUtils.getPaymentCodeTransaction();
+        assertThat(transaction, instanceOf(Transaction.class));
+        assertEquals(TestUtils.PAYMENT_CODE_TRANSACTION, transaction.getHashAsString());
+    }
 }

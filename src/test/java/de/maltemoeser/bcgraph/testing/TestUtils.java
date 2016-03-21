@@ -88,14 +88,28 @@ public class TestUtils {
     public static final String STEALTH_TRANSACTION = "9001cbd710b1e51c2f28e5b155b87c9c6856c87b15ba0737e3963ebad2d6fa3e";
 
     public static Transaction getStealthTransaction() {
+        return getTransactionFromFile("stealth_tx.dat");
+    }
+
+    public static final String PAYMENT_CODE_TRANSACTION = "3fb0b40cc386fb8d5c41314739c49c23299dde490da4d1661d22f5bd50b97427";
+
+    public static Transaction getPaymentCodeTransaction() {
+        return getTransactionFromFile("payment_code_tx.dat");
+    }
+
+    private static Transaction getTransactionFromFile(String filename) {
+        return new Transaction(MainNetParams.get(), getBytesFromFile(filename));
+    }
+
+    private static byte[] getBytesFromFile(String filename) {
         ClassLoader classLoader = TestUtils.class.getClassLoader();
-        File file = new File(classLoader.getResource("stealth_tx.dat").getFile());
-        byte[] txBytes = null;
+        File file = new File(classLoader.getResource(filename).getFile());
+        byte[] bytes = null;
         try {
-            txBytes = FileUtils.readFileToByteArray(file);
+            bytes = FileUtils.readFileToByteArray(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new Transaction(MainNetParams.get(), txBytes);
+        return bytes;
     }
 }
