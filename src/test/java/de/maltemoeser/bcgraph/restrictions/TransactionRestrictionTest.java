@@ -23,4 +23,17 @@ public class TransactionRestrictionTest extends BitcoinTest {
         assertFalse(restriction.evaluate(stealthAddressTransaction));
         assertFalse(restriction.evaluate(normalTransaction));
     }
+
+    @Test
+    public void testStealthAddressRestriction() {
+        Transaction paymentCodeTransaction = TestUtils.getPaymentCodeTransaction();
+        Transaction stealthAddressTransaction = TestUtils.getStealthTransaction();
+        Transaction normalTransaction = TestUtils.getP2PKHTransaction();
+
+        Restriction<Transaction> restriction = new StealthAddressTransactionRestriction();
+
+        assertTrue(restriction.evaluate(stealthAddressTransaction));
+        assertFalse(restriction.evaluate(paymentCodeTransaction));
+        assertFalse(restriction.evaluate(normalTransaction));
+    }
 }
