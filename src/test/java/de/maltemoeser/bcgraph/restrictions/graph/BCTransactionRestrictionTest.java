@@ -1,6 +1,8 @@
-package de.maltemoeser.bcgraph.restrictions;
+package de.maltemoeser.bcgraph.restrictions.graph;
 
 import de.maltemoeser.bcgraph.entities.BCTransaction;
+import de.maltemoeser.bcgraph.restrictions.EntityRestrictor;
+import de.maltemoeser.bcgraph.restrictions.Restrictor;
 import de.maltemoeser.bcgraph.testing.Neo4jTest;
 import org.junit.Test;
 

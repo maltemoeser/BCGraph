@@ -1,6 +1,7 @@
-package de.maltemoeser.bcgraph.restrictions;
+package de.maltemoeser.bcgraph.restrictions.graph;
 
 import de.maltemoeser.bcgraph.entities.BCTransaction;
+import de.maltemoeser.bcgraph.restrictions.Restriction;
 
 
 public class MaximumNumberOfOutputsRestriction implements Restriction<BCTransaction> {

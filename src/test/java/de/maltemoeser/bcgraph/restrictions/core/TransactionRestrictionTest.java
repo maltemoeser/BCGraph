@@ -1,5 +1,6 @@
-package de.maltemoeser.bcgraph.restrictions;
+package de.maltemoeser.bcgraph.restrictions.core;
 
+import de.maltemoeser.bcgraph.restrictions.Restriction;
 import de.maltemoeser.bcgraph.testing.BitcoinTest;
 import de.maltemoeser.bcgraph.testing.TestUtils;
 import org.bitcoinj.core.Transaction;

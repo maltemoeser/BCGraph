@@ -1,5 +1,6 @@
-package de.maltemoeser.bcgraph.restrictions;
+package de.maltemoeser.bcgraph.restrictions.core;
 
+import de.maltemoeser.bcgraph.restrictions.Restriction;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
