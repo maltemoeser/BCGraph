@@ -11,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-public class TestSubSetSolver extends Neo4jTest {
+public class SubSetSolverTest extends Neo4jTest {
 
     @Test
     public void testExtractMostFrequentOutputValue() {
