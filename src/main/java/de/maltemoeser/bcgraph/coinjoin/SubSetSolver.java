@@ -248,7 +248,7 @@ public class SubSetSolver {
         }
 
         // no duplicate inputs, and all inputs are used: valid solution
-        if (currentFullSet.getNumberOfInputs() == transaction.getNumberOfInputs()) {
+        if (currentFullSet.getNumberOfInputs() == transaction.getNumberOfInputs() && currentFullSet.size() == maxSize) {
             solutions.add(currentFullSet);
         }
 
