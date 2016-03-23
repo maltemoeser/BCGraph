@@ -23,6 +23,7 @@ public class ProductionDatabase extends Neo4jDatabase implements Database {
         waitUntilIndexesAreOnline();
     }
 
+    @Override
     public void initialize() {
         initializeInDirectory(properties.getDatabaseDirectory());
     }

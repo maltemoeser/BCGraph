@@ -64,10 +64,12 @@ public abstract class AbstractBlockChainBuilder implements BlockChainBuilder {
         Collections.reverse(blockHashesInCorrectOrder);
     }
 
+    @Override
     public SimplifiedBlockChain getSimplifiedValidBlockChain() {
         return new SimplifiedBlockChain(blockHashToHeight, blockHashesInCorrectOrder);
     }
 
+    @Override
     public BlockChain getChain() {
         return chain;
     }
