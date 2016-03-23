@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * Wrapper class to group multiple InputSubSet objects into a full input set.
+ * Wrapper class to group multiple {@link InputSubSet} objects into a full input set.
  */
 public class InputFullSet {
 
@@ -23,6 +23,10 @@ public class InputFullSet {
         this.subSets = subSets;
     }
 
+    /**
+     * Adds a subset to this full set.
+     * Note, that adding a subset does not check whether the resulting {@code InputFullSet} is valid.
+     */
     public boolean addSubSet(InputSubSet subSet) {
         return subSets.add(subSet);
     }
@@ -53,7 +57,7 @@ public class InputFullSet {
 
     /**
      * Return a copy of this object that retains the references to the underlying subsets.
-     * @return a new InputFullSet initialized with the same subsets.
+     * @return a new {@link InputFullSet} initialized with the same subsets.
      */
     public InputFullSet getCopy() {
         InputFullSet copy = new InputFullSet();
