@@ -17,6 +17,7 @@ public class SubSetSolver {
     protected long mostFrequentOutputValue;
     protected int numberOfParticipants;
     protected double feeVariance;
+    protected int maximumSubSetSize;
 
     protected List<OutputSubSet> outputSubSets = new ArrayList<>();
     protected List<Long> outputSubSetValues;
@@ -67,7 +68,15 @@ public class SubSetSolver {
         if (hasOutputValuesCloseToEachOther()) {
             return false;
         }
+        computeMaximumSubSetSize();
+        // number of possible combinations is 2^n, we therefore avoid too large n
+        if(maximumSubSetSize > 20) {
+            return false;
+        }
         computeInputSubSets();
+        if(inputSubSets.size() > 1000) {
+            return false;
+        }
         computePossibleInputFullSets();
 
         return true;
@@ -148,9 +157,15 @@ public class SubSetSolver {
      * Compute all meaningful input subsets (ie. subsets that in value match an OutputSubSet).
      */
     protected void computeInputSubSets() {
-        // With x inputs and y participants, we can build subsets of size x - (y - 1)
-        int maximumSubSetSize = transaction.getNumberOfInputs() - outputSubSets.size() + 1;
         inputSubSets = getInputSubsets(new ArrayList<>(transaction.getInputs()), maximumSubSetSize);
+    }
+
+    /**
+     * Computes an upper limit on the number inputs in a subset.
+     * With x inputs and y participants, we can have subsets of size x - (y - 1)
+     */
+    protected void computeMaximumSubSetSize() {
+        maximumSubSetSize = transaction.getNumberOfInputs() - outputSubSets.size() + 1;
     }
 
     /**

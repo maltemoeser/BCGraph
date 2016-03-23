@@ -83,6 +83,7 @@ public class TestSubSetSolver extends Neo4jTest {
             solver.extractMostFrequentOutputValue();
             solver.computeOutputSubSets();
             solver.computeAllowedFeeVariance();
+            solver.computeMaximumSubSetSize();
             solver.computeInputSubSets();
 
             assertFalse(solver.hasOutputValuesCloseToEachOther());
@@ -101,6 +102,7 @@ public class TestSubSetSolver extends Neo4jTest {
             solver.extractMostFrequentOutputValue();
             solver.computeOutputSubSets();
             solver.computeAllowedFeeVariance();
+            solver.computeMaximumSubSetSize();
             solver.computeInputSubSets();
             solver.computePossibleInputFullSets();
 
