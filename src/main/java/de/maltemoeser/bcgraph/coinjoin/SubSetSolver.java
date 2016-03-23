@@ -13,6 +13,11 @@ import java.util.stream.Collectors;
  */
 public class SubSetSolver {
 
+    // Solver will stop if the maximum possible subset size is larger than ALLOWED_MAX_SUBSET_SIZE
+    protected final int ALLOWED_MAX_SUBSET_SIZE = 20;
+    // Solver will stop if there are more than ALLOWED_MAX_INPUT_SUBSETS possible input subsets
+    protected final int ALLOWED_MAX_INPUT_SUBSETS = 1000;
+
     protected BCTransaction transaction;
     protected long mostFrequentOutputValue;
     protected int numberOfParticipants;
@@ -70,11 +75,11 @@ public class SubSetSolver {
         }
         computeMaximumSubSetSize();
         // number of possible combinations is 2^n, we therefore avoid too large n
-        if(maximumSubSetSize > 20) {
+        if(maximumSubSetSize > ALLOWED_MAX_SUBSET_SIZE) {
             return false;
         }
         computeInputSubSets();
-        if(inputSubSets.size() > 1000) {
+        if(inputSubSets.size() > ALLOWED_MAX_INPUT_SUBSETS) {
             return false;
         }
         computePossibleInputFullSets();
