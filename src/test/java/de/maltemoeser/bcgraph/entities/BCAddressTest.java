@@ -6,7 +6,10 @@ import de.maltemoeser.bcgraph.testing.Neo4jTest;
 import org.junit.Test;
 import org.neo4j.graphdb.Node;
 
+import java.util.Collection;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class BCAddressTest extends Neo4jTest {
 
@@ -31,4 +34,23 @@ public class BCAddressTest extends Neo4jTest {
         }
     }
 
+    @Test
+    public void testGetOutputs() {
+        try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
+            BCAddress address = getNewAddress();
+            assertEquals(0, address.getOutputs().size());
+
+            BCOutput output1 = getNewOutput();
+            output1.connectToAddress(address);
+            assertEquals(1, address.getOutputs().size());
+
+            BCOutput output2 = getNewOutput();
+            output2.connectToAddress(address);
+            assertEquals(2, address.getOutputs().size());
+
+            Collection<BCOutput> outputs = address.getOutputs();
+            assertTrue(outputs.contains(output1));
+            assertTrue(outputs.contains(output2));
+        }
+    }
 }
