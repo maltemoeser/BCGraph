@@ -13,3 +13,4 @@ target/
 # Production properties
 production.properties
 
+logs

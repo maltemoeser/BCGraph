@@ -197,7 +197,7 @@ public class SubSetSolver {
 
         // stop if value of subset becomes too large
         if (currentSize > 0) {
-            if (current.getCumulativeValue() > 1.5 * valueOfLargestOutputSubSet) {
+            if (current.getCumulativeValue() > feeVariance + valueOfLargestOutputSubSet) {
                 return;
             }
         }
