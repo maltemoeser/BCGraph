@@ -93,6 +93,9 @@ public class BCServiceTest extends Neo4jTest {
             BCAddress address2 = addressService.getOrCreateAddress(ADDRESSHASH);
             assertNotEquals(address0, address1);
             assertEquals(address0, address2);
+
+            assertNotNull(addressService.getAddress(ADDRESSHASH));
+            assertNull(addressService.getAddress(ADDRESSHASH + "-IS-NULL"));
         }
     }
 }

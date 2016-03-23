@@ -21,4 +21,15 @@ public class BCAddressService extends BCEntityService {
         return myAddress;
     }
 
+    /**
+     * Returns the address with the given hash, or {@code null} if it does not exist.
+     */
+    public BCAddress getAddress(String addressHash) {
+        Node node = graphDatabaseService.findNode(LabelType.Address, NodeProperty.ADDRESS_HASH, addressHash);
+        if(node == null) {
+            return null;
+        } else {
+            return new BCAddress(node);
+        }
+    }
 }
