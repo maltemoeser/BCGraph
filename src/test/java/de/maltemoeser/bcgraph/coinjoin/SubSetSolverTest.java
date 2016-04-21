@@ -108,6 +108,9 @@ public class SubSetSolverTest extends Neo4jTest {
 
             // there is only one possible full set
             assertTrue(solver.hasSingleSolution());
+
+            // make sure we aggregated the correct inputs
+            testValueOfTwoElementInputSubSet(solver, 100000000);
         }
     }
 
@@ -121,7 +124,15 @@ public class SubSetSolverTest extends Neo4jTest {
 
             assertEquals(6, solver.getInputSubSets().size());
             assertTrue(solver.hasSingleSolution());
+
+            // make sure we aggregated the correct inputs
+            testValueOfTwoElementInputSubSet(solver, 15600000);
         }
+    }
+
+    private static void testValueOfTwoElementInputSubSet(SubSetSolver solver, long value) {
+        InputFullSet ifs = solver.getInputFullSets().stream().findFirst().get();
+        assertEquals(value, ifs.getSubSets().stream().filter(inputSubSet -> inputSubSet.size() == 2).findFirst().get().getCumulativeValue());
     }
 
     private BCTransaction getSimpleCoinJoinTransaction() {
