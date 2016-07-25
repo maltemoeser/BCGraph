@@ -20,7 +20,7 @@ public class StealthAddressTransactionRestriction implements Restriction<Transac
                 if (script.isOpReturn()) {
                     return isStealthAddressPayload(script);
                 }
-            } catch (ScriptException e) {
+            } catch (ScriptException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
         }
