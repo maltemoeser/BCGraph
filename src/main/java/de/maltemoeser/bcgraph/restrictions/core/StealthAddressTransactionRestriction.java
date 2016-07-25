@@ -2,6 +2,7 @@ package de.maltemoeser.bcgraph.restrictions.core;
 
 import de.maltemoeser.bcgraph.restrictions.Restriction;
 import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.script.Script;
@@ -14,9 +15,13 @@ public class StealthAddressTransactionRestriction implements Restriction<Transac
     @Override
     public boolean evaluate(Transaction transaction) {
         for(TransactionOutput output : transaction.getOutputs()) {
-            Script script = output.getScriptPubKey();
-            if(script.isOpReturn()) {
-                return isStealthAddressPayload(script);
+            try {
+                Script script = output.getScriptPubKey();
+                if (script.isOpReturn()) {
+                    return isStealthAddressPayload(script);
+                }
+            } catch (ScriptException e) {
+                e.printStackTrace();
             }
         }
         return false;
