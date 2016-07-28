@@ -14,3 +14,7 @@ BCGraph allows to import the Bitcoin blockchain into a Neo4j graph database and 
 
 - Use maven to install dependencies
 - Copy `test.properties`, rename it to `production.properties` and fill in the missing directories
+
+## Examples
+
+A few examples are available at [maltemoeser/BCGraph-Examples](https://github.com/maltemoeser/BCGraph-Examples).
