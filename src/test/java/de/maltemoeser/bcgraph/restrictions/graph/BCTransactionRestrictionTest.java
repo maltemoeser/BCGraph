@@ -1,5 +1,6 @@
 package de.maltemoeser.bcgraph.restrictions.graph;
 
+import de.maltemoeser.bcgraph.entities.BCOutput;
 import de.maltemoeser.bcgraph.entities.BCTransaction;
 import de.maltemoeser.bcgraph.restrictions.EntityRestrictor;
 import de.maltemoeser.bcgraph.restrictions.Restrictor;
@@ -72,4 +73,22 @@ public class BCTransactionRestrictionTest extends Neo4jTest {
         }
     }
 
+    @Test
+    public void testNoOpReturnOutputRestriction() {
+        try (org.neo4j.graphdb.Transaction ignored = graphDatabaseService.beginTx()) {
+            BCTransaction transaction = getNewTransaction();
+            BCOutput output = getNewOutput();
+            transaction.addOutput(getNewOutput());
+            transaction.addOutput(output);
+            transaction.addOutput(getNewOutput());
+
+            Restrictor<BCTransaction> restrictor = new EntityRestrictor<BCTransaction>()
+                    .restrict(new NoOpReturnOutputRestriction());
+            assertTrue(restrictor.evaluate(transaction));
+
+            output.setOpReturn(true);
+
+            assertFalse(restrictor.evaluate(transaction));
+        }
+    }
 }
