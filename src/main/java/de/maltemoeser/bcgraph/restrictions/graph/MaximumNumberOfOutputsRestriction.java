@@ -6,7 +6,7 @@ import de.maltemoeser.bcgraph.restrictions.Restriction;
 
 public class MaximumNumberOfOutputsRestriction implements Restriction<BCTransaction> {
 
-    int maximumNumberOfOutputs;
+    private int maximumNumberOfOutputs;
 
     public MaximumNumberOfOutputsRestriction(int maximumNumberOfOutputs) {
         this.maximumNumberOfOutputs = maximumNumberOfOutputs;

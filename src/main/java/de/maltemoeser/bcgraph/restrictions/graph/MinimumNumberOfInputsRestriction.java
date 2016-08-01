@@ -5,7 +5,7 @@ import de.maltemoeser.bcgraph.restrictions.Restriction;
 
 public class MinimumNumberOfInputsRestriction implements Restriction<BCTransaction> {
 
-    int minimumNumberOfInputs;
+    private int minimumNumberOfInputs;
 
     public MinimumNumberOfInputsRestriction(int minimumNumberOfInputs) {
         this.minimumNumberOfInputs = minimumNumberOfInputs;

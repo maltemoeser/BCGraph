@@ -6,7 +6,7 @@ import de.maltemoeser.bcgraph.restrictions.Restriction;
 
 public class MinimumNumberOfOutputsRestriction implements Restriction<BCTransaction> {
 
-    int minimumNumberOfOutputs;
+    private int minimumNumberOfOutputs;
 
     public MinimumNumberOfOutputsRestriction(int minimumNumberOfOutputs) {
         this.minimumNumberOfOutputs = minimumNumberOfOutputs;
