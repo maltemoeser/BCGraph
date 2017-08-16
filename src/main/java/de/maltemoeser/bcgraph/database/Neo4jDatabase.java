@@ -7,7 +7,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.schema.Schema;
-import org.neo4j.helpers.collection.IteratorUtil;
+import org.neo4j.helpers.collection.Iterators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,7 +98,7 @@ public abstract class Neo4jDatabase {
     public Integer getLastInsertedBlockHeight() {
         Integer lastInsertedBlockHeight = null;
         try (Transaction ignored = graphDatabase.beginTx()) {
-            Node block = IteratorUtil.singleOrNull(graphDatabase.findNodes(LabelType.LatestBlock));
+            Node block = Iterators.singleOrNull(graphDatabase.findNodes(LabelType.LatestBlock));
             if (block != null) {
                 lastInsertedBlockHeight = new BCBlock(block).getHeight();
             }

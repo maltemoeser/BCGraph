@@ -4,7 +4,7 @@ import de.maltemoeser.bcgraph.constants.LabelType;
 import de.maltemoeser.bcgraph.constants.NodeProperty;
 import org.bitcoinj.core.TransactionOutPoint;
 import org.neo4j.graphdb.Node;
-import org.neo4j.helpers.collection.IteratorUtil;
+import org.neo4j.helpers.collection.Iterators;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +27,7 @@ public class BCTransactionService extends BCEntityService {
      * Note, that this method will fail when it tries to read one of those transactions with duplicate hashes.
      */
     public BCTransaction getTransactionByHash(String transactionHash) {
-        Node result = IteratorUtil.single(
+        Node result = Iterators.single(
                 graphDatabaseService.findNodes(LabelType.Transaction, NodeProperty.TRANSACTION_HASH, transactionHash)
         );
         return new BCTransaction(result);
@@ -38,7 +38,7 @@ public class BCTransactionService extends BCEntityService {
      * This can be necessary because transaction IDs are not unique (see BIP30).
      */
     public BCTransaction getTransactionByHashAndBlockHash(String transactionHash, String blockHash) {
-        List<Node> nodes = IteratorUtil.asList(graphDatabaseService.findNodes(LabelType.Transaction, NodeProperty.TRANSACTION_HASH, transactionHash));
+        List<Node> nodes = Iterators.asList(graphDatabaseService.findNodes(LabelType.Transaction, NodeProperty.TRANSACTION_HASH, transactionHash));
         if(nodes.size() == 0) { // we did not find any node with this transaction hash
             throw new NoSuchElementException("No transaction found with hash " + transactionHash);
         } else if(nodes.size() == 1) { // there is exactly one with this transaction hash
