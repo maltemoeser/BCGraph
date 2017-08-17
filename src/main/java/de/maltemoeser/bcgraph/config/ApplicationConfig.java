@@ -9,6 +9,7 @@ import org.bitcoinj.params.TestNet3Params;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,9 +32,10 @@ public abstract class ApplicationConfig {
 
     private void loadPropertiesFromFile() {
         try {
-            FileInputStream f = new FileInputStream("./" + getPropertyFileName());
-            properties.load(f);
-            f.close();
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream(getPropertyFileName());
+            properties.load(is);
+            is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
