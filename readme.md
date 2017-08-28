@@ -5,6 +5,8 @@
 
 BCGraph allows to import the Bitcoin blockchain into a Neo4j graph database and provides multiple tools to analyze the resulting data set.
 
+**This project is no longer actively maintained and may not work with the latest version of Bitcoin.**
+
 ## Requirements
 
 - Bitcoin Core block files (to import data into the graph database)
